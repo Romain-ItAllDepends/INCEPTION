@@ -1,35 +1,35 @@
 services: # Contient les services
- nginx: # Le service est nommé nginx (comme un dns google pour aller sur l'ip du site)
+ nginx: # Le service nginx est appelé (comme un dns google pour aller sur l'ip du site mais ici le dns interne a docker)
   build: requirements/nginx/. # Chemin de l'image
-   container_name: nginx # Nom du conteneur
-   ports:
-    - "80:80" # Lie le port 80 du conteneur et de l'hôte
-   depends_on:
-    - wordpress
-   restart: on-failure # Restart en cas de crash
-   networks:
-    - inception
-  wordpress:
-   build: requirements/wordpress/.
-   container_name: wp-php
-#   ports:
-#    - "9000:9000" # Le premier port est l'hôte et le second port est le docker
-   depends_on:
-    - mariadb
-   restart: on-failure
-   volumes:
-    - ./wordpress:/var/www/html
-   networks:
-    - inception
-  mariadb:
-   build: requirements/mariadb/.
-   container_name: mariadb
-#   ports:
-#    - "3306:3306" # Les ports si ils sont occuper par d'autre services causeront des problèmes
-   restart: on-failure
-   volumes:
-    - ./db:/var/lib/mysql
-   networks:
-    - inception
+  container_name: nginx # Nom du conteneur
+  ports:
+   - "80:80" # Lie le port 80 du conteneur et de l'hôte, pour recevoir les requêtes HTTP
+  depends_on:
+   - wordpress
+  restart: on-failure # Restart en cas de crash
+  networks:
+   - inception
+ wordpress:
+  build: requirements/wordpress/.
+  container_name: wp-php
+#  ports:
+#   - "9000:9000" # Le premier port est l'hôte et le second port est le docker, utilise le docker-network
+  depends_on:
+   - mariadb
+  restart: on-failure
+  volumes:
+   - ./wordpress:/var/www/html
+  networks:
+   - inception
+ mariadb:
+  build: requirements/mariadb/.
+  container_name: mariadb
+#  ports:
+#   - "3306:3306" # Les ports si ils sont occupés par d'autre services causeront des problèmes, utilise également le docker-network pour communiquer avec wordpress qui lui communique avec nginx
+  restart: on-failure
+  volumes:
+   - ./db:/var/lib/mysql
+  networks:
+   - inception
 networks:
  inception:
