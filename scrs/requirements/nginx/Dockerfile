@@ -11,6 +11,7 @@ RUN apt update \
 
 # Doit configurer nginx puis openssl car besoin des ports, domaine ..
 # Apres l'acquisition d'un certificat il faut reload nginx (nginx -s reload)
+# J'ai vu les deux etre fais en meme temps
 
 # CMD permet d'éxecuter par defaut une commande dés le démarrage du conteneur
 
@@ -19,7 +20,7 @@ RUN apt update \
 # daemon off; → Empêche Nginx de passer en mode daemon (arrière-plan), ce qui est nécessaire dans un conteneur Docker. (permet d'empêcher le conteneur de s'arrêter directement)
 
 # COPY permet de copier le dossier ou fichier default a l'emplacement qui suit.
-# default ??? maybe tools ou conf ????
+# La config de nginx est default
 
 COPY default /etc/nginx/sites-availables/.
 
