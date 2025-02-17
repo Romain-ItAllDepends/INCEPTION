@@ -1,5 +1,5 @@
 services: # Contient les services
- nginx: # Le service nginx est appelé (comme un dns google pour aller sur l'ip du site mais ici le dns interne a docker)
+ nginx: # Le service nginx est appelé (comme un dns google pour aller sur l'ip du site mais ici le dns interne a docker) et nginx est le serveur qui sert wordpress
   build: requirements/nginx/. # Chemin de l'image
   container_name: nginx # Nom du conteneur
   ports:
