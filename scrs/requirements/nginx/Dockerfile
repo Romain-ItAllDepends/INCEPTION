@@ -8,6 +8,10 @@ RUN apt update \
 	&& apt upgrade -y \
 	&& apt install -y nginx \
 	&& apt install -y openssl
+	&& openssl req -x509 -nodes \
+    -out /etc/nginx/ssl/inception.crt \
+    -keyout /etc/nginx/ssl/inception.key \
+    -subj "/C=FR/ST=Nouvelle-Aquitaine/L=Angouleme/O=42/OU=42/CN=rgobet.42.fr/UID=rgobet"
 
 # Doit configurer nginx puis openssl car besoin des ports, domaine ..
 # Apres l'acquisition d'un certificat il faut reload nginx (nginx -s reload)
