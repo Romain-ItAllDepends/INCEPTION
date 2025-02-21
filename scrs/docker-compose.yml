@@ -3,7 +3,7 @@ services: # Contient les services
   build: requirements/nginx/. # Chemin de l'image
   container_name: nginx # Nom du conteneur
   ports:
-   - "443:443" # Lie le port 80 du conteneur et de l'hôte, pour recevoir les requêtes HTTP
+   - "443:443" # Lie le port 80 du conteneur et de l'hôte, pour recevoir les requêtes HTTPS
   depends_on:
    - wordpress
   restart: on-failure # Restart en cas de crash
