@@ -5,12 +5,12 @@ FROM debian:bullseye
 # TLS est un protocole de sécurité qui assure le chiffrement, l'intégrité et l'authentification des données échangées entre deux systèmes.
 
 RUN apt update \
-	&& apt upgrade -y \
-	&& apt install -y nginx \
-	&& apt install -y openssl \
+    && apt upgrade -y \
+    && apt install -y nginx \
+    && apt install -y openssl \
     && apt clean \
     && mkdir -p /etc/nginx/ssl \
-	&& openssl req -x509 -nodes \
+    && openssl req -x509 -nodes \
     -out /etc/nginx/ssl/inception.crt \
     -keyout /etc/nginx/ssl/inception.key \
     -subj "/C=FR/ST=Nouvelle-Aquitaine/L=Angouleme/O=42/OU=42/CN=rgobet.42.fr/UID=rgobet"
