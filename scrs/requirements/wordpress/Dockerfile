@@ -8,7 +8,9 @@ RUN apt update && apt upgrade -y \
     php8.2-fpm \
     php-mysqli \
     mariadb-client \
-    && apt clean # Vide les fichiers en cache inutiles
+    && apt clean
+    
+# apt clean vide les fichiers en cache inutiles
 
 # curl permet de telecharger des fichiers en utilisant des liens
 
