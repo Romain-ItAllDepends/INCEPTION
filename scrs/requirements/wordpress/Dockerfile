@@ -3,9 +3,9 @@ FROM debian:bullseye
 RUN apt update && apt upgrade -y \
     && apt install -y curl \
     unzip \
-    php7.4 \
+    php8.2 \
     php-zip \
-    php-fpm \
+    php8.2-fpm \
     php-mysqli \
     mariadb-client \
     && apt clean # Vide les fichiers en cache inutiles
@@ -13,8 +13,7 @@ RUN apt update && apt upgrade -y \
 # curl permet de telecharger des fichiers en utilisant des liens
 
 # Vérifier que PHP et PHP-FPM fonctionnent
-RUN php -v
-RUN php-fpm -v
+RUN php -v && php-fpm -v
 
 WORKDIR /var/www/html
 RUN curl -O https://wordpress.org/wordpress-6.7.zip \
@@ -25,3 +24,5 @@ RUN curl -O https://wordpress.org/wordpress-6.7.zip \
 # Supprime le .zip
 
 EXPOSE 9000
+
+CMD ["/usr/local/bin/wp.sh"]
