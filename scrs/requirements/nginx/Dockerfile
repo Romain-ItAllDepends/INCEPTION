@@ -7,12 +7,15 @@ FROM debian:bullseye
 RUN apt update \
 	&& apt upgrade -y \
 	&& apt install -y nginx \
-	&& apt install -y openssl
-	&& mkdir -p /etc/nginx/ssl
+	&& apt install -y openssl \
+    && apt clean \
+    && mkdir -p /etc/nginx/ssl \
 	&& openssl req -x509 -nodes \
     -out /etc/nginx/ssl/inception.crt \
     -keyout /etc/nginx/ssl/inception.key \
     -subj "/C=FR/ST=Nouvelle-Aquitaine/L=Angouleme/O=42/OU=42/CN=rgobet.42.fr/UID=rgobet"
+
+# apt clean vide les fichiers en cache inutiles
 
 # CMD permet d'éxecuter par defaut une commande dés le démarrage du conteneur
 
@@ -23,6 +26,8 @@ RUN apt update \
 # COPY permet de copier le dossier ou fichier default a l'emplacement qui suit.
 # La config de nginx est default
 
-COPY default /etc/nginx/sites-availables/
+COPY default /etc/nginx/sites-availables/.
+
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]

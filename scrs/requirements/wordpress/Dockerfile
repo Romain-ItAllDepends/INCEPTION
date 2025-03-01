@@ -8,9 +8,7 @@ RUN apt update && apt upgrade -y \
     php-fpm \
     php-mysqli \
     mariadb-client \
-    && apt clean
-
-# apt clean vide les fichiers en cache inutiles
+    && apt clean # Vide les fichiers en cache inutiles
 
 # curl permet de telecharger des fichiers en utilisant des liens
 
@@ -23,7 +21,7 @@ RUN curl -O https://wordpress.org/wordpress-6.7.zip \
 	&& unzip wordpress-6.7.zip wordpress/* -d . \
 	&& rm wordpress-6.7.zip
 # Telecharge wordpress
-# Unzip les fichier dans le dossier wordpress du .zip puis les mets dans le dossier courant (a verif)
+# Unzip les fichier dans le dossier wordpress du .zip puis les mets dans le dossier courant
 # Supprime le .zip
 
 EXPOSE 9000
