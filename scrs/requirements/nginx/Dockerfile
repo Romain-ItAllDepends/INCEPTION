@@ -24,9 +24,12 @@ RUN apt update \
 # daemon off; → Empêche Nginx de passer en mode daemon (arrière-plan), ce qui est nécessaire dans un conteneur Docker. (permet d'empêcher le conteneur de s'arrêter directement)
 
 # COPY permet de copier le dossier ou fichier default a l'emplacement qui suit.
-# La config de nginx est default
 
-COPY default /etc/nginx/sites-availables/.
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+
+# Permet l'acces de /var/www/html avec nginx qui est dans le groupe www-data
+# ### Maybe besoin de donner des droits particuliers mais j'en doute
+RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 
