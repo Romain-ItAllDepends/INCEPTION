@@ -6,7 +6,7 @@ RUN apt update && apt upgrade -y \
 
 COPY tools/mariadb.sh mariadb.sh
 
-RUN chmod 744 mariadb.sh
+RUN chmod 744 mariadb.sh && chmod -R 755 /var/lib/mysql && chown -R mysql:mysql /var/lib/mysql
 
 EXPOSE 3306
 

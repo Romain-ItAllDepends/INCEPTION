@@ -1,34 +1,46 @@
 services: # Contient les services
  nginx: # Le service nginx est appelé (comme un dns google pour aller sur l'ip du site mais ici le dns interne a docker) et nginx est le serveur qui sert wordpress
-  build: requirements/nginx/. # Chemin de l'image
+  build: requirements/nginx # Chemin de l'image
   container_name: nginx # Nom du conteneur
   ports:
    - "443:443" # Lie le port 80 du conteneur et de l'hôte, pour recevoir les requêtes HTTPS
   depends_on:
    - wordpress
   restart: on-failure # Restart en cas de crash
+  volumes:
+    - /home/rgobet/data/wordpress:/var/www/html
   networks:
    - inception
  wordpress:
-  build: requirements/wordpress/.
+  build: requirements/wordpress
   container_name: wp-php
 #  ports:
 #   - "9000:9000" # Le premier port est l'hôte et le second port est le docker, utilise le docker-network
   depends_on:
    - mariadb
   restart: on-failure
+  env_file:
+      - .env
   volumes:
-   - ./wordpress:/var/www/html
+   - /home/rgobet/data/wordpress:/var/www/html
   networks:
    - inception
  mariadb:
-  build: requirements/mariadb/.
+  build: requirements/mariadb
   container_name: mariadb
 #  ports:
 #   - "3306:3306" # Les ports si ils sont occupés par d'autre services causeront des problèmes, utilise également le docker-network pour communiquer avec wordpress qui lui communique avec nginx
   restart: on-failure
+  env_file:
+      - .env
   volumes:
-   - ./db:/var/lib/mysql
+   - /home/rgobet/data/mariadb:/var/lib/mysql
+  healthcheck:
+   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MARIADB_ROOT_PASSWORD}"]
+   interval: 10s
+   timeout: 5s
+   retries: 5
+   start_period: 10s
   networks:
    - inception
 networks:
