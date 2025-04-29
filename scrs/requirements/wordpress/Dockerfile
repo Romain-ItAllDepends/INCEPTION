@@ -14,11 +14,11 @@ RUN curl -fsSL https://packages.sury.org/php/README.txt | bash -x
 RUN apt install -m -y php8.2 php8.2-fpm php-zip php8.2-mysql mariadb-client unzip \
     && apt clean
     
-# apt clean vide les fichiers en cache inutiles
+# apt clean empties unnecessary cache files
 
-# curl permet de telecharger des fichiers en utilisant des liens
+# curl allows you to download files using links
 
-# Vérifier que PHP et PHP-FPM fonctionnent
+# Verify that PHP and PHP-FPM are working
 RUN php -v && php-fpm8.2 -v
 
 WORKDIR /var/www/html
@@ -27,14 +27,14 @@ RUN curl -O https://wordpress.org/wordpress-6.7.zip \
 	&& mv wordpress/* . \
 	&& rm -rf wordpress wordpress-6.7.zip
 
-# Telecharge wordpress
-# Unzip les fichier dans le dossier wordpress du .zip puis les mets dans le dossier courant
-# Supprime le .zip
+# Download WordPress
+# Unzip the files in the WordPress folder from the .zip file and then place them in the current folder
+# Delete the .zip file
 
-# www-data doit etre proprietaire du fichier car php-fpm s'execute en tant que www-data mais un docker lui en tant que root
-# Donc si le proprietaire n'est pas changer le wordpress ne sera pas modifiable (php-fpm peut pas lire/ecrire/modifier les fichiers wordpress)
-# et il sera impossible d'installer des plugins ou d'utiliser certaines fonctionnalitees wordpress
-# /run/php est necessaire pour le fonctionnement de php-fpm
+# www-data must be the owner of the file because php-fpm runs as www-data, but Docker runs as root
+# So if the owner isn't changed, WordPress won't be editable (php-fpm can't read/write/edit WordPress files)
+# and it will be impossible to install plugins or use certain WordPress features
+# /run/php is required for php-fpm to work
 
 RUN chown -R www-data:www-data /var/www/html && \
 mkdir -p /run/php && \

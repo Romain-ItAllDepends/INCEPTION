@@ -1,8 +1,8 @@
 FROM debian:bullseye
 
-# L'option -y signifie que quand il sera demande Y/N pour download, yes sera envoyer automatiquement
+# The -y option means that when Y/N is requested for download, yes will be sent automatically.
 
-# TLS est un protocole de sécurité qui assure le chiffrement, l'intégrité et l'authentification des données échangées entre deux systèmes.
+# TLS is a security protocol that ensures the encryption, integrity, and authentication of data exchanged between two systems.
 
 RUN apt update \
     && apt upgrade -y \
@@ -15,20 +15,19 @@ RUN apt update \
     -keyout /etc/nginx/ssl/inception.key \
     -subj "/C=FR/ST=Nouvelle-Aquitaine/L=Angouleme/O=42/OU=42/CN=rgobet.42.fr/UID=rgobet"
 
-# apt clean vide les fichiers en cache inutiles
+# apt clean clears unnecessary cached files
 
-# CMD permet d'éxecuter par defaut une commande dés le démarrage du conteneur
+# CMD allows you to run a command by default when the container starts
 
-# nginx → Démarre le serveur Nginx.
-# -g → Option qui permet de passer une directive globale à Nginx. (Obligatoire due a l'utilisation de Docker et est utiliser pour éditer le fichier nginx.conf)
-# daemon off; → Empêche Nginx de passer en mode daemon (arrière-plan), ce qui est nécessaire dans un conteneur Docker. (permet d'empêcher le conteneur de s'arrêter directement)
+# nginx → Starts the Nginx server.
+# -g → Option that allows you to pass a global directive to Nginx. (Required when using Docker and is used to edit the nginx.conf file)
+# daemon off; → Prevents Nginx from switching to daemon (background) mode, which is required in a Docker container. (Prevents the container from stopping directly)
 
-# COPY permet de copier le dossier ou fichier default a l'emplacement qui suit.
+# COPY copies the default folder or file to the following location.
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-# Permet l'acces de /var/www/html avec nginx qui est dans le groupe www-data
-# ### Maybe besoin de donner des droits particuliers mais j'en doute
+# Allows access to /var/www/html with nginx which is in the www-data group
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
