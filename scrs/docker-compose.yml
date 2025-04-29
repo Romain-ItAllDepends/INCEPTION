@@ -1,12 +1,12 @@
-services: # Contient les services
- nginx: # Le service nginx est appelé (comme un dns google pour aller sur l'ip du site mais ici le dns interne a docker) et nginx est le serveur qui sert wordpress
-  build: requirements/nginx # Chemin de l'image
-  container_name: nginx # Nom du conteneur
+services: # Contains services
+ nginx: # The nginx service is called (like a google dns to go to the site ip but here the internal dns has docker) and nginx is the server that serves wordpress
+  build: requirements/nginx # Image path
+  container_name: nginx # Name of container
   ports:
-   - "443:443" # Lie le port 80 du conteneur et de l'hôte, pour recevoir les requêtes HTTPS
+   - "443:443" # Binds port 80 of the container and host, to receive HTTPS requests
   depends_on:
    - wordpress
-  restart: on-failure # Restart en cas de crash
+  restart: on-failure # Restart if crash
   volumes:
     - /home/rgobet/data/wordpress:/var/www/html
   networks:
@@ -14,8 +14,6 @@ services: # Contient les services
  wordpress:
   build: requirements/wordpress
   container_name: wp-php
-#  ports:
-#   - "9000:9000" # Le premier port est l'hôte et le second port est le docker, utilise le docker-network
   depends_on:
    - mariadb
   restart: on-failure
@@ -28,8 +26,6 @@ services: # Contient les services
  mariadb:
   build: requirements/mariadb
   container_name: mariadb
-#  ports:
-#   - "3306:3306" # Les ports si ils sont occupés par d'autre services causeront des problèmes, utilise également le docker-network pour communiquer avec wordpress qui lui communique avec nginx
   restart: on-failure
   env_file:
       - .env
