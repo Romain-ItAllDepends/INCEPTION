@@ -31,6 +31,5 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 RUN chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
-EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
