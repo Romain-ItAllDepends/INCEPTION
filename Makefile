@@ -24,4 +24,7 @@ restart:
 	@sudo rm -rf /home/rgobet/data/mariadb/*
 	@sudo rm -rf /home/rgobet/data/wordpress/*
 	@cd scrs && docker compose up --build
+	
+delete:
+	@cd /home/rgobet && sudo rm -rf data
 
