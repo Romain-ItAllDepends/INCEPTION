@@ -2,8 +2,6 @@ FROM debian:bullseye
 
 # The -y option means that when Y/N is requested for download, yes will be sent automatically.
 
-# TLS is a security protocol that ensures the encryption, integrity, and authentication of data exchanged between two systems.
-
 RUN apt update \
     && apt upgrade -y \
     && apt install -y nginx \
