@@ -28,3 +28,4 @@ restart:
 delete:
 	@cd /home/rgobet && sudo rm -rf data
 
+.PHONY: all ls on start stop restart delete
